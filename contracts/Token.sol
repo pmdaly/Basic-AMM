@@ -1,12 +1,10 @@
-// SPDX-License-Identifier: MI
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import { IERC20 } from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import { ERC20 } from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-contract Token {
-    IERC20 public xToken;
-    IERC20 public yToken;
-
-    constructor(IERC20 _xToken, IERC20 _yToken) {
+contract Token is ERC20 {
+    constructor() ERC20("Token", "Tkn") {
+        _mint(msg.sender, 2000);
     }
 }
