@@ -12,7 +12,7 @@ contract Market {
         yToken = _yToken;
     }
 
-    function supply(uint xAmount, uint yAmount) public {
+    function supply(uint256 xAmount, uint256 yAmount) public {
         xToken.transferFrom(msg.sender, address(this), xAmount);
         yToken.transferFrom(msg.sender, address(this), yAmount);
     }
