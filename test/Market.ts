@@ -4,6 +4,7 @@ import { Market__factory  } from '../typechain/factories/Market__factory'
 import { Token } from '../typechain/Token'
 import { Token__factory } from '../typechain/factories/Token__factory'
 import { expect } from 'chai'
+import exp from 'constants'
 
 describe('Market', () => {
     let deployer
@@ -30,8 +31,18 @@ describe('Market', () => {
     })
 
     it('supply', async () => {
-        await market.supply(1000, 2000)
+        await expect(market.supply(1000, 2000)).to.emit(market, 'Supply').withArgs(1000, 2000)
         expect(await kiwi.balanceOf(market.address)).to.equal(1000)
         expect(await plum.balanceOf(market.address)).to.equal(2000)
+    })
+
+    it('trade', async () => {
+        await market.trade(100)
+        expect(await kiwi.balanceOf(market.address)).to.equal(1100)
+        expect(await plum.balanceOf(market.address)).to.below(2000)
+    })
+
+    it('trade reverts on 0', async () => {
+        await expect(market.trade(0)).to.be.revertedWith('amount is 0')
     })
 })
